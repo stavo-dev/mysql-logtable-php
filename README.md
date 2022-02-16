@@ -17,8 +17,8 @@ Get started by entering your database credentials in configure.php.
 
 Execute the scripts from your favorite browser by visiting:
 
-    1   http://localhost/mysql-logtable-php/create_table_logs.php
-    2   http://localhost/mysql-logtable-php/create_triggers.php
+    1   /mysql-logtable-php/create_table_logs.php
+    2   /mysql-logtable-php/create_triggers.php
 
 The browser will display minified code. Go to view source for formatted code.
 
@@ -35,11 +35,6 @@ The browser will display minified code. Go to view source for formatted code.
         client_email VARCHAR ( 50 ) NOT NULL,
         client_passcode_hash BINARY ( 128 ),
         client_salt CHAR ( 36 ),
-        client_first_name VARCHAR ( 35 ),
-        client_last_name VARCHAR ( 35 ),
-        client_phone_number CHAR ( 10 ),
-        user_opt_in_email BIT DEFAULT 0,
-        user_opt_in_phone BIT DEFAULT 0,
         last_modified_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY ( client_id ),
         CONSTRAINT unique_client_email UNIQUE ( client_email )
@@ -60,14 +55,10 @@ The browser will display minified code. Go to view source for formatted code.
         client_email VARCHAR ( 50 ),
         client_passcode_hash BINARY ( 128 ),
         client_salt CHAR ( 36 ),
-        client_first_name VARCHAR ( 35 ),
-        client_last_name VARCHAR ( 35 ),
-        client_phone_number CHAR ( 10 ),
-        user_opt_in_email BIT,
-        user_opt_in_phone BIT,
         last_modified_datetime TIMESTAMP,
         PRIMARY KEY ( id )
     );
+
 
     2   http://localhost/mysql-logtable-php/create_triggers.php
 
@@ -87,11 +78,6 @@ The browser will display minified code. Go to view source for formatted code.
             client_email = NEW.client_email,
             client_passcode_hash = NEW.client_passcode_hash,
             client_salt = NEW.client_salt,
-            client_first_name = NEW.client_first_name,
-            client_last_name = NEW.client_last_name,
-            client_phone_number = NEW.client_phone_number,
-            user_opt_in_email = NEW.user_opt_in_email,
-            user_opt_in_phone = NEW.user_opt_in_phone,
             last_modified_datetime = NEW.last_modified_datetime;
             
     END;;
@@ -110,11 +96,6 @@ The browser will display minified code. Go to view source for formatted code.
             client_email = NEW.client_email,
             client_passcode_hash = NEW.client_passcode_hash,
             client_salt = NEW.client_salt,
-            client_first_name = NEW.client_first_name,
-            client_last_name = NEW.client_last_name,
-            client_phone_number = NEW.client_phone_number,
-            user_opt_in_email = NEW.user_opt_in_email,
-            user_opt_in_phone = NEW.user_opt_in_phone,
             last_modified_datetime = NEW.last_modified_datetime;
             
     END;;
