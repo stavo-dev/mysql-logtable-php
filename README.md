@@ -1,10 +1,10 @@
 <div id="top"></div>
 
-## mysql-logtable-php
+### mysql-logtable-php
 
-mysql-logtable-php is a set of PHP scripts which leverage INFORMATION_SCHEMA to create log tables and insert / update triggers.
+mysql-logtable-php is a set of PHP scripts which leverage MySQL INFORMATION_SCHEMA to create log tables and insert / update triggers.
 
-## Configuration
+### Configuration
 
 Get started by entering your database credentials in configure.php.
 
@@ -13,7 +13,7 @@ Get started by entering your database credentials in configure.php.
     8   $password = '{password}';
     9   $database = '{database}';
 
-## Execute
+### Execute
 
 Execute the scripts from your favorite browser by visiting:
 
@@ -22,9 +22,9 @@ Execute the scripts from your favorite browser by visiting:
 
 The browser will display minified code. Go to view source for formatted code.
 
-## Demonstration
+### Demo
 
-### Create demo_mysql_logtable_php schema
+#### Schema for demo_mysql_logtable_php
 
     CREATE DATABASE demo_mysql_logtable_php CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
     USE demo_mysql_logtable_php;
@@ -45,7 +45,7 @@ The browser will display minified code. Go to view source for formatted code.
         CONSTRAINT unique_client_email UNIQUE ( client_email )
     );
 
-### Output
+#### Output
 
     1   http://localhost/mysql-logtable-php/create_table_logs.php
 
@@ -121,13 +121,13 @@ The browser will display minified code. Go to view source for formatted code.
 
     DELIMITER ;
 
-## Contact
+### Contact
 
 If you are having issues, please create an issue on GitHub.
 
 Project Link: [https://github.com/stavo-dev/mysql-logtable-php](https://github.com/stavo-dev/mysql-logtable-php)
 
-## License
+### License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
