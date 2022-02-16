@@ -1,14 +1,129 @@
-# mysql-logtable-php
-
 <div id="top"></div>
 
-## About The Project
+## mysql-logtable-php
 
-Need to log tables in MySQL?
+mysql-logtable-php is a set of PHP scripts which leverage INFORMATION_SCHEMA to create log tables and insert / update triggers.
 
-These scripts access INFORMATION_SCHEMA to create log tables and insert / update triggers. I prefer to keep my delete triggers with the procedures.
+## Installation
 
-Get started by entering your database credentials into configure.php.
+    go get -u github.com/stavo-dev/mysql-logtable-php
+
+## Configuration
+
+Get started by entering your database credentials in configure.php.
+
+    6   $hostname = '{hostname}';
+    7   $username = '{username}';
+    8   $password = '{password}';
+    9   $database = '{database}';
+
+## Execute
+
+Execute the scripts from your favorite browser by visiting:
+
+    1   http://localhost/mysql-logtable-php/create_table_logs.php
+    2   http://localhost/mysql-logtable-php/create_triggers.php
+
+The browser will display minified code. Go to view source for formatted code.
+
+# Demonstration
+
+# Create demo_mysql_logtable_php schema
+
+    CREATE DATABASE demo_mysql_logtable_php CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    USE demo_mysql_logtable_php;
+
+    DROP TABLE IF EXISTS client;
+    CREATE TABLE client (
+        client_id INT NOT NULL AUTO_INCREMENT,
+        client_email VARCHAR ( 50 ) NOT NULL,
+        client_passcode_hash BINARY ( 128 ),
+        client_salt CHAR ( 36 ),
+        client_first_name VARCHAR ( 35 ),
+        client_last_name VARCHAR ( 35 ),
+        client_phone_number CHAR ( 10 ),
+        user_opt_in_email BIT DEFAULT 0,
+        user_opt_in_phone BIT DEFAULT 0,
+        last_modified_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY ( client_id ),
+        CONSTRAINT unique_client_email UNIQUE ( client_email )
+    );
+
+## Output
+
+    1   http://localhost/mysql-logtable-php/create_table_logs.php
+
+    -- ----------------------------
+    -- Table structure for __client
+    -- ----------------------------
+    DROP TABLE IF EXISTS __client;
+    CREATE TABLE __client (
+        id INT NOT NULL AUTO_INCREMENT,
+        action CHAR ( 6 ),
+        client_id INT,
+        client_email VARCHAR ( 50 ),
+        client_passcode_hash BINARY ( 128 ),
+        client_salt CHAR ( 36 ),
+        client_first_name VARCHAR ( 35 ),
+        client_last_name VARCHAR ( 35 ),
+        client_phone_number CHAR ( 10 ),
+        user_opt_in_email BIT,
+        user_opt_in_phone BIT,
+        last_modified_datetime TIMESTAMP,
+        PRIMARY KEY ( id )
+    );
+
+    2   http://localhost/mysql-logtable-php/create_triggers.php
+
+    DELIMITER ;;
+
+    -- ----------------------------
+    -- Trigger for trigger_client_insert
+    -- ----------------------------
+    DROP TRIGGER IF EXISTS trigger_client_insert;;
+    CREATE TRIGGER trigger_client_insert AFTER INSERT ON client
+    FOR EACH ROW
+    BEGIN
+
+        INSERT INTO __client
+        SET action = 'insert',
+            client_id = NEW.client_id,
+            client_email = NEW.client_email,
+            client_passcode_hash = NEW.client_passcode_hash,
+            client_salt = NEW.client_salt,
+            client_first_name = NEW.client_first_name,
+            client_last_name = NEW.client_last_name,
+            client_phone_number = NEW.client_phone_number,
+            user_opt_in_email = NEW.user_opt_in_email,
+            user_opt_in_phone = NEW.user_opt_in_phone,
+            last_modified_datetime = NEW.last_modified_datetime;
+            
+    END;;
+
+    -- ----------------------------
+    -- Trigger for trigger_client_update
+    -- ----------------------------
+    DROP TRIGGER IF EXISTS trigger_client_update;;
+    CREATE TRIGGER trigger_client_update AFTER UPDATE ON client
+    FOR EACH ROW
+    BEGIN
+
+        INSERT INTO __client
+        SET action = 'update',
+            client_id = NEW.client_id,
+            client_email = NEW.client_email,
+            client_passcode_hash = NEW.client_passcode_hash,
+            client_salt = NEW.client_salt,
+            client_first_name = NEW.client_first_name,
+            client_last_name = NEW.client_last_name,
+            client_phone_number = NEW.client_phone_number,
+            user_opt_in_email = NEW.user_opt_in_email,
+            user_opt_in_phone = NEW.user_opt_in_phone,
+            last_modified_datetime = NEW.last_modified_datetime;
+            
+    END;;
+
+    DELIMITER ;
 
 ## Contact
 
