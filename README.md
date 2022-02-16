@@ -6,8 +6,8 @@
 
 Need to log tables in MySQL?
 
-These scripts acesss INFORMATION_SCHEMA to create log tables and insert/update triggers.
-I prefer to keep my delete triggers with the prcoedures.
+These scripts access INFORMATION_SCHEMA to create log tables and insert/update triggers.
+I prefer to keep my delete triggers with the procedures.
 
 Get started by entering your database credentials into configure.php.
 
